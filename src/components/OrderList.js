@@ -1,6 +1,6 @@
 /*
  * --------------------------------------------------------------------------- *
- * File: App.js                                                                *
+ * File: OrderList.js                                                          *
  * Project: seller                                                             *
  * Created Date: 12 Oct 2022                                                   *
  * Author: Vikas K Solegaonkar (vikas@crystalcloudsolutions.com)               *
@@ -16,29 +16,22 @@
  * --------------------------------------------------------------------------- *
  */
 
-import { AppContext, AppContextProvider } from "./main/context";
-import Header from "./components/Header";
-import OrderList from "./components/OrderList";
-import { useContext } from "react";
-import Login from "./components/Login";
+import React, { useContext } from "react";
+import { AppContext } from "../main/context";
+import OrderItem from "./OrderItem";
 
-function Body() {
-  const { authenticated } = useContext(AppContext);
-  return authenticated ? (
-    <>
-      <Header />
-      <OrderList />
-    </>
-  ) : (
-    <Login></Login>
-  );
-}
-function App() {
+function OrderList() {
+  const { orderList } = useContext(AppContext);
+
   return (
-    <AppContextProvider>
-      <Body />
-    </AppContextProvider>
+    <div className="container">
+      <div className="row">
+        {orderList.map((o) => (
+          <OrderItem item={o} />
+        ))}
+      </div>
+    </div>
   );
 }
 
-export default App;
+export default OrderList;

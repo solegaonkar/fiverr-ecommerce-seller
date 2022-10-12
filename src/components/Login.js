@@ -1,6 +1,6 @@
 /*
  * --------------------------------------------------------------------------- *
- * File: App.js                                                                *
+ * File: Login.js                                                              *
  * Project: seller                                                             *
  * Created Date: 12 Oct 2022                                                   *
  * Author: Vikas K Solegaonkar (vikas@crystalcloudsolutions.com)               *
@@ -16,29 +16,28 @@
  * --------------------------------------------------------------------------- *
  */
 
-import { AppContext, AppContextProvider } from "./main/context";
-import Header from "./components/Header";
-import OrderList from "./components/OrderList";
-import { useContext } from "react";
-import Login from "./components/Login";
+import React, { useContext } from "react";
+import { AppContext } from "../main/context";
 
-function Body() {
-  const { authenticated } = useContext(AppContext);
-  return authenticated ? (
-    <>
-      <Header />
-      <OrderList />
-    </>
-  ) : (
-    <Login></Login>
-  );
-}
-function App() {
+function Login() {
+  const { setAuthenticated } = useContext(AppContext);
+
   return (
-    <AppContextProvider>
-      <Body />
-    </AppContextProvider>
+    <div className="container mt-4">
+      <div className="row">
+        <div className="col-md-3"></div>
+        <div className="col-12 col-md-6 text-center border border-danger border shadow rounded-3 p-4 mt-4 mb-4 ">
+          <h3>Login</h3>
+          <hr />
+          <input type={"text"} className="wide p-2 mt-4" placeholder="User Name" />
+          <input type={"password"} className="wide p-2 mt-4" placeholder="Password" />
+          <button className="btn btn-danger mt-4" onClick={(e) => setAuthenticated(true)}>
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 
-export default App;
+export default Login;

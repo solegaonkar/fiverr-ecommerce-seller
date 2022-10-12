@@ -1,6 +1,6 @@
 /*
  * --------------------------------------------------------------------------- *
- * File: App.js                                                                *
+ * File: OrderItem.js                                                          *
  * Project: seller                                                             *
  * Created Date: 12 Oct 2022                                                   *
  * Author: Vikas K Solegaonkar (vikas@crystalcloudsolutions.com)               *
@@ -16,29 +16,30 @@
  * --------------------------------------------------------------------------- *
  */
 
-import { AppContext, AppContextProvider } from "./main/context";
-import Header from "./components/Header";
-import OrderList from "./components/OrderList";
-import { useContext } from "react";
-import Login from "./components/Login";
+import React from "react";
 
-function Body() {
-  const { authenticated } = useContext(AppContext);
-  return authenticated ? (
-    <>
-      <Header />
-      <OrderList />
-    </>
-  ) : (
-    <Login></Login>
-  );
-}
-function App() {
+function OrderItem({ item }) {
+  var { id, title, price, buyerName, buyerAddress } = item;
   return (
-    <AppContextProvider>
-      <Body />
-    </AppContextProvider>
+    <div className="col-12 col-md-6 text-dark">
+      <div className="p-4 mt-4 shadow-lg border border-dark border-3 bg-light rounded-4">
+        <h4 className="border border-dark border-0 rounded-2 p-2">{title}</h4>
+        <hr />
+        <div className="p-4 border border-dark border-1 rounded-2">
+          <p className="">
+            Product ID: {id} <br /> Price: ${price}
+          </p>
+          <p>
+            <>Buyer: </> {buyerName}
+            <br /> <>Address: </> {buyerAddress}
+          </p>
+          <div className=" text-right">
+            <button className="btn btn-sm btn-danger">Mark Complete</button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
-export default App;
+export default OrderItem;
