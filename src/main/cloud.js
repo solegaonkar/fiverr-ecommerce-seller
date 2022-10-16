@@ -1,8 +1,8 @@
 /*
  * --------------------------------------------------------------------------- *
- * File: OrderList.js                                                          *
+ * File: cloud.js                                                              *
  * Project: seller                                                             *
- * Created Date: 12 Oct 2022                                                   *
+ * Created Date: 16 Oct 2022                                                   *
  * Author: Vikas K Solegaonkar (vikas@crystalcloudsolutions.com)               *
  * Copyright (c) 2022 Vikas K Solegaonkar                                      *
  * Crystal Cloud Solutions (https://crystalcloudsolutions.com)                 *
@@ -16,33 +16,27 @@
  * --------------------------------------------------------------------------- *
  */
 
-import React, { useContext, useEffect } from "react";
-import { Constants } from "../main/constants";
-import { AppContext } from "../main/context";
-import OrderItem from "./OrderItem";
-import { Cloud } from "../main/cloud";
+import axios from "axios";
 
-function OrderList() {
-  const { orderList, setOrderList } = useContext(AppContext);
+export class Cloud {
+  static headers;
 
-  useEffect(() => {
-    Cloud.post(Constants.API, { action: "ORDER_LIST" }).then((value) => setOrderList(value));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const refresh = async () => {
-    Cloud.post(Constants.API, { action: "ORDER_LIST" }).then((value) => setOrderList(value));
+  static post = async (url, data) => {
+    var response = await axios.post(url, data, Cloud.headers);
+    return response.data;
   };
 
-  return (
-    <div className="container">
-      <div className="row">
-        {orderList.map((o) => (
-          <OrderItem item={o} refresh={refresh} />
-        ))}
-      </div>
-    </div>
-  );
-}
+  static get = async (url) => {
+    var response = await axios.get(url, Cloud.headers);
+    return response.data;
+  };
 
-export default OrderList;
+  static setToken = (token) => {
+    Cloud.headers = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    };
+  };
+}

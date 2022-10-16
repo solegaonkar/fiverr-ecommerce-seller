@@ -1,8 +1,8 @@
 /*
  * --------------------------------------------------------------------------- *
- * File: OrderList.js                                                          *
+ * File: constants.js                                                          *
  * Project: seller                                                             *
- * Created Date: 12 Oct 2022                                                   *
+ * Created Date: 16 Oct 2022                                                   *
  * Author: Vikas K Solegaonkar (vikas@crystalcloudsolutions.com)               *
  * Copyright (c) 2022 Vikas K Solegaonkar                                      *
  * Crystal Cloud Solutions (https://crystalcloudsolutions.com)                 *
@@ -16,33 +16,6 @@
  * --------------------------------------------------------------------------- *
  */
 
-import React, { useContext, useEffect } from "react";
-import { Constants } from "../main/constants";
-import { AppContext } from "../main/context";
-import OrderItem from "./OrderItem";
-import { Cloud } from "../main/cloud";
-
-function OrderList() {
-  const { orderList, setOrderList } = useContext(AppContext);
-
-  useEffect(() => {
-    Cloud.post(Constants.API, { action: "ORDER_LIST" }).then((value) => setOrderList(value));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const refresh = async () => {
-    Cloud.post(Constants.API, { action: "ORDER_LIST" }).then((value) => setOrderList(value));
-  };
-
-  return (
-    <div className="container">
-      <div className="row">
-        {orderList.map((o) => (
-          <OrderItem item={o} refresh={refresh} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export default OrderList;
+export const Constants = {
+  API: "https://pw9s4fkmsf.execute-api.us-east-1.amazonaws.com/v1",
+};

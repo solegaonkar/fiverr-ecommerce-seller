@@ -7,7 +7,7 @@
  * Copyright (c) 2022 Vikas K Solegaonkar                                      *
  * Crystal Cloud Solutions (https://crystalcloudsolutions.com)                 *
  *                                                                             *
- * Last Modified: Wed Oct 12 2022                                              *
+ * Last Modified: Sun Oct 16 2022                                              *
  * Modified By: Vikas K Solegaonkar                                            *
  *                                                                             *
  * HISTORY:                                                                    *
@@ -17,9 +17,21 @@
  */
 
 import React from "react";
+import { Cloud } from "../main/cloud";
+import { Constants } from "../main/constants";
 
-function OrderItem({ item }) {
-  var { id, title, price, buyerName, buyerAddress } = item;
+function OrderItem({ item, refresh }) {
+  var { id, title, price, buyerName, buyerAddress, orderStatus } = item;
+
+  const completeOrder = async () => {
+    await Cloud.post(Constants.API, { action: "COMPLETE_ORDER", data: { id } });
+    refresh();
+  };
+
+  const reopenOrder = async () => {
+    await Cloud.post(Constants.API, { action: "REOPEN_ORDER", data: { id } });
+    refresh();
+  };
   return (
     <div className="col-12 col-md-6 text-dark">
       <div className="p-4 mt-4 shadow-lg border border-dark border-3 bg-light rounded-4">
@@ -34,7 +46,15 @@ function OrderItem({ item }) {
             <br /> <>Address: </> {buyerAddress}
           </p>
           <div className=" text-right">
-            <button className="btn btn-sm btn-danger">Mark Complete</button>
+            {orderStatus === "CLOSED" ? (
+              <button className="btn btn-sm btn-primary" onClick={(e) => reopenOrder()}>
+                Reopen
+              </button>
+            ) : (
+              <button className="btn btn-sm btn-danger" onClick={(e) => completeOrder()}>
+                Mark Complete
+              </button>
+            )}
           </div>
         </div>
       </div>
