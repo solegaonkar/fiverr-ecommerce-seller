@@ -7,7 +7,7 @@
  * Copyright (c) 2022 Vikas K Solegaonkar                                      *
  * Crystal Cloud Solutions (https://crystalcloudsolutions.com)                 *
  *                                                                             *
- * Last Modified: Sun Oct 16 2022                                              *
+ * Last Modified: Mon Oct 17 2022                                              *
  * Modified By: Vikas K Solegaonkar                                            *
  *                                                                             *
  * HISTORY:                                                                    *
@@ -32,6 +32,12 @@ function OrderItem({ item, refresh }) {
     await Cloud.post(Constants.API, { action: "REOPEN_ORDER", data: { id } });
     refresh();
   };
+
+  const deleteOrder = async () => {
+    await Cloud.post(Constants.API, { action: "DELETE_ORDER", data: { id } });
+    refresh();
+  };
+
   return (
     <div className="col-12 col-md-6 text-dark">
       <div className="p-4 mt-4 shadow-lg border border-dark border-3 bg-light rounded-4">
@@ -47,9 +53,14 @@ function OrderItem({ item, refresh }) {
           </p>
           <div className=" text-right">
             {orderStatus === "CLOSED" ? (
-              <button className="btn btn-sm btn-primary" onClick={(e) => reopenOrder()}>
-                Reopen
-              </button>
+              <>
+                <button className="btn btn-sm btn-primary m-1" onClick={(e) => reopenOrder()}>
+                  Reopen
+                </button>
+                <button className="btn btn-sm btn-danger m-1" onClick={deleteOrder}>
+                  Delete Order
+                </button>
+              </>
             ) : (
               <button className="btn btn-sm btn-danger" onClick={(e) => completeOrder()}>
                 Mark Complete

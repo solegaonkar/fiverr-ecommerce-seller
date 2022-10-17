@@ -30,3 +30,7 @@ code {
 .wide {
   width: 100%;
 }
+
+.click {
+  cursor: pointer;
+}

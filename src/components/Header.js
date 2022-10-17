@@ -7,7 +7,7 @@
  * Copyright (c) 2022 Vikas K Solegaonkar                                      *
  * Crystal Cloud Solutions (https://crystalcloudsolutions.com)                 *
  *                                                                             *
- * Last Modified: Wed Oct 12 2022                                              *
+ * Last Modified: Mon Oct 17 2022                                              *
  * Modified By: Vikas K Solegaonkar                                            *
  *                                                                             *
  * HISTORY:                                                                    *
@@ -20,12 +20,15 @@ import React, { useContext } from "react";
 import { AppContext } from "../main/context";
 
 function Header() {
-  const { cart } = useContext(AppContext);
+  const { setAuthenticated } = useContext(AppContext);
   return (
     <>
       <nav className="navbar navbar-expand-sm bg-danger text-light">
         <div className="container-fluid">
           <h1>Shop Online</h1>
+        </div>
+        <div className="text-right p-4 click" onClick={(e) => setAuthenticated(false)}>
+          Logout
         </div>
       </nav>
       <div className="container-fluid">
